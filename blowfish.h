@@ -17,6 +17,7 @@ class BLOWFISH{
 
     #define ROUNDS 16
     public:
+        BLOWFISH();
         BLOWFISH(std::string hexKey);
         BLOWFISH(byte* cipherKey, int keylength);
 
@@ -61,7 +62,18 @@ class BLOWFISH{
         int hex2dec(char hex);
         std::string byteToHex(unsigned char x);
 };
-
+    BLOWFISH::BLOWFISH(){
+        std::string hexKey = "asbafdga";
+        IvSet = false;
+        if(hexKey.length() % 2 != 0)
+            throw 2;
+        byte key[hexKey.length() / 2];
+        for(int i = 0; i < hexKey.length() / 2; i++)
+        {
+            key[i] = hex2dec(hexKey[i * 2]) * 16 + hex2dec(hexKey[i * 2 + 1]);
+        }
+        SetupKey(key, hexKey.length() / 2);
+    }
     BLOWFISH::BLOWFISH(std::string hexKey)
     {
         IvSet = false;

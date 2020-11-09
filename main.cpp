@@ -5,10 +5,11 @@ using namespace std;
 
 int main(){
     cryptAlgos bfVar;
-    string text = "grape";
-    //string ret = bfVar.BlowFish(text);
-    //cout<<ret<<"\n";
-    string ans = bfVar.shaHash(text);
-    cout<<ans<<" ";
+    /* string input = "123456abcd132536";
+    string ret = bfVar.BlowFish(input);
+    cout<<ret<<" \n";
+    string op = bfVar.bfDecrypt(ret);
+    cout<<"Decrypted: "<<op;
+    */
     return 0;
 }
