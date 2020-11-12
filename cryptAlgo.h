@@ -1,64 +1,50 @@
-#include<bits/stdc++.h>
-#include "methods.h"
+
+#ifndef INS_PROJECT_CRYPTALGO_H
+#define INS_PROJECT_CRYPTALGO_H
+
+#include <bits/stdc++.h>
 #include "blowfish.h"
 #include "shaHash2.h"
 #include "digitalSignature.h"
-
 using namespace std;
 
-class cryptAlgos;
 
+typedef long long int ll;
 
-class cryptAlgos{
+class cryptAlgo{
     ll rsaPrime1;
     ll rsaPrime2;
     string blow_fish_hexKey;
     BLOWFISH obj;
-public: 
-    cryptAlgos();
-    double rsa(double message);
-    string BlowFish(string data);
+    
+public:
+    cryptAlgo(string key);
+//    double rsa(double message);
+    string blowfishEncrypt(string data);
     string shaHash(string input);
-    string bfDecrypt(string e);
+    string blowfishDecrypt(string e);
 };
 
-cryptAlgos::cryptAlgos(){
+cryptAlgo::cryptAlgo(string key){
     rsaPrime1 = 13;
     rsaPrime2 = 11;
-    blow_fish_hexKey = "aabb09182736ccdd";
+    blow_fish_hexKey = key;
     obj = BLOWFISH(blow_fish_hexKey);
 }
 
-string cryptAlgos::BlowFish(string data){
-     
-    string e = obj.Encrypt_CBC(data);
-    return e;
+string cryptAlgo::blowfishEncrypt(string data){
+    string e_data = obj.Encrypt_ECB(data);
+    return e_data;
 }
-string cryptAlgos::bfDecrypt(string e){
-    string op = obj.Decrypt_CBC(e);
-    return op;
+string cryptAlgo::blowfishDecrypt(string data){
+    string d_data = obj.Decrypt_ECB(data);
+    return d_data;
 }
-string cryptAlgos::shaHash(string input){
+
+string cryptAlgo::shaHash(string input){
     string op = sha256(input);
     return op;
 }
-double cryptAlgos::rsa(double message){
-    double n=rsaPrime1*rsaPrime2;
-    double track;
-    double phi= (rsaPrime1-1)*(rsaPrime2-1);
-    double e = 7;
-    
-    //satisfying conditions for e
-    while(e<phi) {
-        track = gcd(e,phi);
-        if(track==1)
-            break;
-        else
-            e++;
-    }   
-    double encryptedMessage = pow(message,e); //encrypt the message
-    encryptedMessage = fmod(encryptedMessage,n);
-    return encryptedMessage;
-}
 
 
+#endif //INS_PROJECT_CRYPTALGO_H
